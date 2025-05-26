@@ -6,8 +6,8 @@ class Node:
     def __repr__(self):
         return f'{self.data}'
 
+
 class LinkedList:
-    size = 0
     def __init__(self):
         self.head = None
         self.tail = None
@@ -19,27 +19,6 @@ class LinkedList:
         else:
             self.tail.next = item
             self.tail = item
-
-
-    def insert_front(self, value):
-        item = Node(value)
-
-        if not self.head:       # Empty List.
-            self.head = self.tail = item
-        else:
-            item.next = self.head
-            self.head = item
-
-        size += 1
-        
-
-    def delete_front(self):
-        if not self.head:   # Empty list
-            return
-        elif self.head == self.tail:    # 1 Node.
-            self.head = self.tail = None
-        else:
-            self.head = self.head.next
 
     def get_nth(self, n):
         if not self.head:       # Empty list
@@ -60,23 +39,33 @@ class LinkedList:
             print('Invalid position!')
             exit()
 
-    def get_nth_from_back(self, n):
-        if not self.head:
-            print('Empty list')
-        
-        cur = self.head
-        size = 0
-        
-        # Get length:
-        while cur is not None:
-            size += 1
-            cur = cur.next
+    def is_identical(self, lst):
+        cur1 = self.head
+        cur2 = lst.head
+        same_size = True
+        same_values = True
 
-        target = (size - n) + 1
-        node = self.get_nth(target)
-        return node
-        
+        while True:
+            if cur1 is not None and cur2 is None:
+                same_size = False
+                break
 
+            if cur2 is not None and cur1 is None:
+                same_size = False
+                break
+
+            if cur1.data != cur2.data:
+                same_values = False
+                break
+
+            cur1 = cur1.next
+            cur2 = cur2.next
+        
+        if same_size is True and same_values is True:
+            print('List 1 and List 2 are Identical.')
+        else:
+            print('List 1 and List 2 are not Identical.')
+        
 
     def print(self):
         temp_head = self.head
@@ -93,16 +82,22 @@ class LinkedList:
             yield temp_head
             temp_head = temp_head.next
 
-
 if __name__ == '__main__':
-    lst = LinkedList()
-    lst.insert_end(11)
-    lst.insert_end(22)
-    lst.insert_end(33)
-    lst.insert_end(44)
-    lst.insert_end(55)
-    lst.insert_end(66)
+    lst1 = LinkedList()
+    lst1.insert_end(61)
+    # lst1.insert_end(11)
+    # lst1.insert_end(14)
+    # lst1.insert_end(19)  
 
-    print(lst.get_nth_from_back(7))
+    lst2 = LinkedList()
+    lst2.insert_end(61)
+    # lst2.insert_end(11)
+    # lst2.insert_end(14)
+    # lst2.insert_end(19)
+    # lst2.insert_end(17)
+
+    lst1.print()
+    lst2.print()
+    lst1.is_identical(lst2)
 
     
