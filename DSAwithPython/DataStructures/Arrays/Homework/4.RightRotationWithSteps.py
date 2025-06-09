@@ -51,12 +51,52 @@ class Array:
         self.size += 1
 
     def right_rotation(self):
-        last_item = self.__getitem__(self.size - 1)
+        if self.size == 0:
+            return
+        
+        last_item = self.__getitem__(self.size -1)
 
         for i in range(self.size -1, 0, -1):
             self.memory[i] = self.memory[i - 1]
 
         self.memory[0] = last_item
+
+
+    def right_rotation_steps(self, steps):
+        '''
+            - We don't have to rotate n_steps if n_steps > array.length
+                We only need size - 1 iterations.
+            - If n_steps == array.length then we'll come up with the same array order.
+            - If n_steps > array.length then n_steps mod array.lenght = actual_n_steps
+        '''
+        # Check num of steps:
+        if steps > self.size:
+            steps = steps % self.size
+        elif steps == self.size:
+            return 
+        
+        for i in range(steps):
+            self.right_rotation()
+        
+    def reverse(self, idx1, idx2):
+        while idx1 <= idx2:
+            self.memory[idx1], self.memory[idx2] = self.memory[idx2], self.memory[idx1]
+            idx1 += 1
+            idx2 -= 1
+    
+    def right_rotation_steps_v2(self, steps):
+        if steps > self.size:
+            steps %= self.size
+
+        # 1. Reverse the whole array:
+        self.reverse(0, self.size - 1)
+
+        # 2. Reverse at split point:
+        
+
+        # 3. Revers each splitted part:
+
+
     
     def __len__(self):
         return self.size
@@ -81,4 +121,14 @@ if __name__ == '__main__':
     array.append(2)
     array.append(3)
     array.append(4)
+
+    print(array)
+    array.reverse(0, array.size - 1)
+    print(array)
+
+    # array.right_rotation_steps(10)
+    # print(array)
+
+
+
 
